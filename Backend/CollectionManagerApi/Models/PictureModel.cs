@@ -2,6 +2,7 @@
 {
     public class PictureModel
     {
-        public int PictureID { get; set; }
+        public int PictureID { get; private set; }
+        public string PictureUrl { get; set; }
     }
 }

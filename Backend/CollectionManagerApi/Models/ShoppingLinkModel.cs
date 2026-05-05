@@ -2,6 +2,9 @@
 {
     public class ShoppingLinkModel
     {
-        public List<string> ShoppingLinks { get; set; }
+        public int ShoppingLinkID { get; private set; }
+        public string ShoppingLinkUrl { get; set; }
+        public string? ShoppingLinkTitle { get; set; }
+        public bool ShoppingLinkIsActive { get; private set; }
     }
 }
