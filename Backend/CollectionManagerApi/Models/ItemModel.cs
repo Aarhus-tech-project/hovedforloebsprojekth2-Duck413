@@ -3,6 +3,7 @@
     public class ItemModel
     {
         public int ItemID { get; private set; }
+        public int UserID { get; private set; }
         public string ItemName { get; set; }
         public string? ItemType { get; set; }
         public string? ItemDescription { get; set; }

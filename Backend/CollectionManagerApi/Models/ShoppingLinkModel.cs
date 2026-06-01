@@ -3,6 +3,7 @@
     public class ShoppingLinkModel
     {
         public int ShoppingLinkID { get; private set; }
+        public int UserID { get; private set; }
         public string ShoppingLinkUrl { get; set; }
         public string? ShoppingLinkTitle { get; set; }
         public bool ShoppingLinkIsActive { get; private set; }

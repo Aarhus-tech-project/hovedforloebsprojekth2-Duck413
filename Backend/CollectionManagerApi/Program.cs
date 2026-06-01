@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using CollectionManagerApi;
+using CollectionManagerApi.Data;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //DbContext
 builder.Services.AddDbContext<MyDbContext>(options => 
-    options.UseSqlServer(builder.Configuration.GetConnectionString("PLACEHOLDER")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionStrings")));
 
 
 var app = builder.Build();

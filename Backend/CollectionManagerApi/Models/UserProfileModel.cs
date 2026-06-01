@@ -8,6 +8,5 @@
         public int? PictureID { get; set; }
         public PictureModel? Picture { get; set; }
         public bool AdminUserType { get; set; }
-        public StatisticModel Statistics { get; private set; } = new();
     }
 }
