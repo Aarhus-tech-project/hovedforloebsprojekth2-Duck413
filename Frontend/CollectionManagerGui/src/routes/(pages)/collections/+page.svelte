@@ -40,38 +40,61 @@
 </nav>
 
 {#if loading}
-  <p class="flex justify-left ml-10 mt-10">Fetching collections...</p>
+  <p class="flex justify-left ml-10 mt-10 mb-10">Fetching collections...</p>
 
 {:else if error}
-  <p class="flex justify-left ml-10 mt-10">{error}</p>
+  <p class="flex justify-left cursive ml-10 mt-10 mb-10">{error}</p>
 
 {:else if collections.length === 0}
-  <p class="flex justify-left ml-10 mt-10">There are no collections.</p>
+  <p class="flex justify-left ml-10 mt-10 mb-10">There are no collections.</p>
   <a href="/collections/new">Create your first collection</a>
 
 {:else}
-  <ul>
+  <ul class="grid grid-cols-3 gap-6 ml-10 mr-10 mb-10 items-start">
     {#each collections as collection}
-      <li class="ml-10 mb-10">
-        <h2>{collection.collectionName}</h2>
-        <p>{collection.collectionDescription}</p>
-        <button onclick={() => goto(`/collections/${collection.collectionID}`)}>
-          See collection
+      <li class="list-none border rounded-lg p-6">
+        <h2 class="font-bold text-[25px]">{collection.collectionName}</h2>
+        <p class="text-[17px]">{collection.collectionDescription}</p>
+        <button 
+          class="inline-block bg-purple-700 text-white px-6 py-2 mt-3 rounded-lg cursor-pointer hover:bg-purple-900"
+          onclick={() => goto(`/collections/${collection.collectionID}`)}>
+          View collection
         </button>      
       </li>
     {/each}
   </ul>
 {/if}
 
-<!-- Dette er eksempler på hvordan en collwction ville se ud hvis den loadede - bruges til design -->
-<li class="ml-10 mb-10">
-  <p class="mt-5">
-    Collection Name
-  </p>
-  <p class="">
-    Collection Description
-  </p>
-  <p class="">
-    See collection
-  </p>
-</li>
+<!-- Dette er et eksempel på hvordan en collection ville se ud hvis den loadede - bruges til design -->
+<ul class="grid grid-cols-3 gap-6 ml-10 mr-10 mb-10 items-start">  
+  <li class="list-none border rounded-lg p-4">
+    <h2 class="font-bold text-[25px]">Collection Name</h2>
+    <p class="text-[17px]">Collection Description. Here i have written a little something about my collection</p>
+    <button class="inline-block inline bg-purple-700 text-white px-6 py-2 mt-3 rounded-lg cursor-pointer hover:bg-purple-900" onclick={() => goto('/collections/test')}>View TEST collection</button>
+  </li>
+  <li class="list-none border rounded-lg p-4">
+    <h2 class="font-bold text-[25px]">Collection Name 2</h2>
+    <p class="text-[17px]">Collection Description. Here i have written a little something about my collection</p>
+    <button class="inline-block bg-purple-700 text-white px-6 py-2 mt-3 rounded-lg cursor-pointer hover:bg-purple-900" onclick={() => goto('/collections/test')}>View TEST collection</button>
+  </li>
+  <li class="list-none border rounded-lg p-4">
+    <h2 class="font-bold text-[25px]">Collection Name 3</h2>
+    <p class="text-[17px]">Collection Description. Here i have written a little something about my collection</p>
+    <button class="inline-block bg-purple-700 text-white px-6 py-2 mt-3 rounded-lg cursor-pointer hover:bg-purple-900" onclick={() => goto('/collections/test')}>View TEST collection</button>
+  </li>
+  <li class="list-none border rounded-lg p-4">
+    <h2 class="font-bold text-[25px]">Collection Name 4</h2>
+    <p class="text-[17px]">Collection Description. Here i have written a little something about my collection</p>
+    <button class="inline-block bg-purple-700 text-white px-6 py-2 mt-3 rounded-lg cursor-pointer hover:bg-purple-900" onclick={() => goto('/collections/test')}>View TEST collection</button>
+  </li>
+  <li class="list-none border rounded-lg p-4">
+    <h2 class="font-bold text-[25px]">Collection Name 5</h2>
+    <p class="text-[17px]">Collection Description. Here i have written a little something about my collection</p>
+    <button class="inline-block bg-purple-700 text-white px-6 py-2 mt-3 rounded-lg cursor-pointer hover:bg-purple-900" onclick={() => goto('/collections/test')}>View TEST collection</button>
+  </li>
+  <li class="list-none border rounded-lg p-4">
+    <h2 class="font-bold text-[25px]">Collection Name 6</h2>
+    <p class="text-[17px]">Collection Description. Here i have written a little something about my collection</p>
+    <button class="inline-block bg-purple-700 text-white px-6 py-2 mt-3 rounded-lg cursor-pointer hover:bg-purple-900" onclick={() => goto('/collections/test')}>View TEST collection</button>
+  </li>
+</ul>
