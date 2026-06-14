@@ -31,12 +31,15 @@
 {#if view === 'login'}
   <div class="flex flex-col gap-4 items-center">
     <h2 class="text-2xl font-bold ">Login</h2>
+    
     <input class="border p-2 rounded w-64 text-black" type="text" placeholder="Email" />
     <input class="border p-2 rounded w-64 text-black" type="password" placeholder="Password" />
-    <button class="bg-purple-700 text-white px-6 py-2 rounded-lg cursor-pointer hover:bg-purple-900" onclick={() => goto('/collections')}>
+    <button class="bg-purple-700 text-white px-6 py-2 rounded-lg cursor-pointer hover:bg-purple-900" 
+      onclick={() => goto('/collections')}>
       Login
     </button>
   </div>
+
 {:else}
 <div class="flex flex-col gap-4 items-center">
   <h2 class="text-2xl font-bold">Create user</h2>
@@ -51,8 +54,14 @@
     <input class="border p-2 rounded w-64 text-black" type="password" />
   </div>
 
-  <button class="bg-purple-700 text-white px-6 py-2 rounded-lg cursor-pointer hover:bg-purple-900" onclick={() => goto('/collections')}>
+  <button class="bg-purple-700 text-white px-6 py-2 rounded-lg cursor-pointer hover:bg-purple-900" 
+    onclick={() => goto('/collections')}>
     Create
   </button>
 </div>
 {/if}
+
+<button class="bg-purple-700 text-white px-6 py-2 rounded-lg cursor-pointer hover:bg-purple-900" 
+  onclick={() => goto('/collections')}>
+  TEST
+</button>
