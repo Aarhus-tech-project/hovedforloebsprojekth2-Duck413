@@ -18,3 +18,9 @@
     Wishlist
   </button>
 </nav>
+
+<!--    public int? PictureID { get; set; }
+        public string DisplayName { get; set; }
+        public string? UserDescription { get; set; }
+        public Picture? Picture { get; set; }
+  -->
