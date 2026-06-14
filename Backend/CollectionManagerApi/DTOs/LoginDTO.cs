@@ -1,8 +1,8 @@
 ﻿namespace CollectionManagerApi.DTOs
 {
-    public class LoginRequestDTO
+    public class LoginDTO
     {
         public string UserEmail { get; set; }
-        public string PasswordHash { get; set; }
+        public string Password { get; set; }
     }
 }
