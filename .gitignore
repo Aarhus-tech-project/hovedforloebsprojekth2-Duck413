@@ -526,6 +526,12 @@ FodyWeavers.xsd
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 
-# End of https://www.toptal.com/developers/gitignore/api/visualstudio,aspnetcoreB a c k e n d / C o l l e c t i o n M a n a g e r A p i / a p p s e t t i n g s . P r o d u c t i o n . j s o n  
- B a c k e n d / C o l l e c t i o n M a n a g e r A p i / a p p s e t t i n g s . D e v e l o p m e n t . j s o n  
- 
+# Secrets
+Backend/CollectionManagerApi/appsettings.Production.json
+Backend/CollectionManagerApi/appsettings.Development.json
+
+# Frontend
+Frontend/CollectionManagerGUI/.env
+Frontend/CollectionManagerGUI/.svelte-kit/
+Frontend/CollectionManagerGUI/local.db
+Frontend/CollectionManagerGUI/node_modules/
