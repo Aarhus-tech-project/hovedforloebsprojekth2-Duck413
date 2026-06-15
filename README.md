@@ -4,7 +4,4 @@
 Til min hovedforløbsopgave er der vedlagt:
    - Kode til frontend
    - Kode til backend
-   - Dokumentation af min opgave:
-	- Domain model diagram
-	- Implementation classes diagram
-	- ER diagram
+   - Dokumentation af min opgave: Domain model diagram, Implementation classes diagram, ER diagram
