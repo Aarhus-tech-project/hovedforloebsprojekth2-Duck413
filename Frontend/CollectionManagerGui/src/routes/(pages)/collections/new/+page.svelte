@@ -1,6 +1,7 @@
 <!-- Create collection page-->
 <script>
   import { goto } from '$app/navigation';
+  import { getToken } from '$lib/auth.js';
 
   const BASE = 'https://localhost:44366/api';
 
@@ -14,10 +15,13 @@
 
     await fetch(`${BASE}/Collection`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getToken()}`
+      },
       body: JSON.stringify({
-        collectionName: collectionName,
-        collectionDescription: collectionDescription
+        collectionName,
+        collectionDescription
       })
     });
     goto('/collections');

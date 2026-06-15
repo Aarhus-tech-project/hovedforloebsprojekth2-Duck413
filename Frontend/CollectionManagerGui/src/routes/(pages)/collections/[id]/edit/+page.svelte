@@ -65,16 +65,16 @@
 
 </div>
 
-<!-- TEST NAVIGATION; DELETE LATER-->
+<!-- TEST NAVIGATION; DELETE LATER
 <nav class="flex justify-left ml-10">
   <button 
     class="bg-purple-700 text-white px-6 py-2 rounded-lg cursor-pointer hover:bg-purple-900"
     onclick={() => goto('/collections/test')}>
     Cancel
   </button>
-</nav>
+</nav>-->
 
-<!-- ACTUAL NAVIGATION
+<!-- ACTUAL NAVIGATION-->
 <nav class="flex justify-left ml-10">
   <button 
     class="bg-purple-700 text-white px-6 py-2 rounded-lg cursor-pointer hover:bg-purple-900"
@@ -82,4 +82,3 @@
     Cancel
   </button>
 </nav>
--->

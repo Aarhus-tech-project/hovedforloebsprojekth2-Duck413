@@ -1,8 +1,44 @@
 <!-- Login page-->
 <script>
   import { goto } from '$app/navigation';
+  import { setToken } from '$lib/auth.js';
+
+  const BASE = 'https://localhost:44366/api';
 
   let view = $state('login');
+  let email = $state('');
+  let password = $state('');
+  let registerEmail = $state('');
+  let registerPassword = $state('');
+  let displayName = $state('');
+
+  async function register() {
+    const res = await fetch(`${BASE}/Auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        userEmail: registerEmail, 
+        password: registerPassword,
+        displayName: displayName
+      })
+    });
+    if (res.ok) {
+      view = 'login'; // switch to login after registering
+    } else {
+      alert('Registration failed');
+    }
+  } 
+
+  async function login() {
+    const res = await fetch(`${BASE}/Auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userEmail: email, password: password })
+    });
+    const data = await res.json();
+    setToken(data.token);
+    goto('/collections');
+  }
 </script>
 
 <header>
@@ -30,12 +66,11 @@
 
 {#if view === 'login'}
   <div class="flex flex-col gap-4 items-center">
-    <h2 class="text-2xl font-bold ">Login</h2>
-    
-    <input class="border p-2 rounded w-64 text-black" type="text" placeholder="Email" />
-    <input class="border p-2 rounded w-64 text-black" type="password" placeholder="Password" />
+    <h2 class="text-2xl font-bold">Login</h2>
+    <input class="border p-2 rounded w-64 text-black" type="text" placeholder="Email" bind:value={email} />
+    <input class="border p-2 rounded w-64 text-black" type="password" placeholder="Password" bind:value={password} />
     <button class="bg-purple-700 text-white px-6 py-2 rounded-lg cursor-pointer hover:bg-purple-900" 
-      onclick={() => goto('/collections')}>
+      onclick={login}>
       Login
     </button>
   </div>
@@ -45,17 +80,22 @@
   <h2 class="text-2xl font-bold">Create user</h2>
   
   <div class="flex items-center gap-4 mr-35">
+    <label class="w-32 text-right">Display name</label>
+    <input class="border p-2 rounded w-64 text-black" type="text" bind:value={displayName} />
+  </div>
+
+  <div class="flex items-center gap-4 mr-35">
     <label class="w-32 text-right">Your email</label>
-    <input class="border p-2 rounded w-64 text-black" type="text" />
+    <input class="border p-2 rounded w-64 text-black" type="text" bind:value={registerEmail} />
   </div>
 
   <div class="flex items-center gap-4 mr-35">
     <label class="w-32 text-right">Your password</label>
-    <input class="border p-2 rounded w-64 text-black" type="password" />
+    <input class="border p-2 rounded w-64 text-black" type="password" bind:value={registerPassword} />
   </div>
 
   <button class="bg-purple-700 text-white px-6 py-2 rounded-lg cursor-pointer hover:bg-purple-900" 
-    onclick={() => goto('/collections')}>
+    onclick={register}>
     Create
   </button>
 </div>

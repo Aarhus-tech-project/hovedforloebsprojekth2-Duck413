@@ -16,7 +16,7 @@
         submitted = true;
         if (!itemName.trim()) return;
 
-        /*await fetch(`${BASE}/Item/${data.itemId}`, {
+        await fetch(`${BASE}/Item/${data.itemId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -27,8 +27,8 @@
                 itemCount: Number(itemCount)
             })
         });
-        goto(`/collections/${data.collectionId}/items/${data.itemId}`);*/
-        goto('/items/itemTest');    }
+        goto(`/collections/${data.collectionId}/items/${data.itemId}`);
+        /*goto('/items/itemTest');*/    }
 </script>
 
 <h1 class="text-center text-4xl mt-10">
