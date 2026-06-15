@@ -30,6 +30,21 @@ namespace CollectionManagerApi.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // User generates its own ID
+            modelBuilder.Entity<User>()
+                .Property(u => u.UserID)
+                .ValueGeneratedOnAdd();
+
+            // UserLogin uses User's ID
+            modelBuilder.Entity<UserLogin>()
+                .Property(ul => ul.UserID)
+                .ValueGeneratedNever();
+
+            // UserProfile uses User's ID
+            modelBuilder.Entity<UserProfile>()
+                .Property(up => up.UserID)
+                .ValueGeneratedNever();
+
             //UserLogin - 1:1 med User
             modelBuilder.Entity<UserLogin>()
                 .HasKey(ul => ul.UserID);
@@ -144,12 +159,14 @@ namespace CollectionManagerApi.Data
             modelBuilder.Entity<CollectionFolder_Collection>()
                 .HasOne(cf_c => cf_c.CollectionFolder)
                 .WithMany(cf => cf.CollectionFolder_Collection)
-                .HasForeignKey(cf_c => cf_c.CollectionFolderID);
+                .HasForeignKey(cf_c => cf_c.CollectionFolderID)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<CollectionFolder_Collection>()
                 .HasOne(cf_c => cf_c.Collection)
                 .WithMany(c => c.CollectionFolder_Collection)
-                .HasForeignKey(cf_c => cf_c.CollectionID);
+                .HasForeignKey(cf_c => cf_c.CollectionID)
+                .OnDelete(DeleteBehavior.Restrict);
 
             //Item_Collection - m:m med Item og Collection
             modelBuilder.Entity<Item_Collection>()

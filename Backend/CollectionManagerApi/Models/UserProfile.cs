@@ -8,6 +8,6 @@
         public string? UserDescription { get; set; }
         public bool AdminUserType { get; set; }
         public Picture? Picture { get; set; }
-        public User User {  get; set; }
+        public User User { get; set; }
     }
 }
