@@ -14,18 +14,17 @@ namespace CollectionManagerApi.Services
             _context = context;
         }
 
-        public async Task<Collection> CreateCollection(CreateCollectionDTO dto)
+        public async Task<Collection> CreateCollection(CreateCollectionDTO dto, int userId)
         {
             var collection = new Collection
             {
                 CollectionName = dto.CollectionName,
-                CollectionDescription = dto.CollectionDescription
+                CollectionDescription = dto.CollectionDescription,
+                UserID = userId
             };
-            
+
             _context.Collection.Add(collection);
-
             await _context.SaveChangesAsync();
-
             return collection;
         }
 

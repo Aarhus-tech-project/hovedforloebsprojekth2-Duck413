@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CollectionManagerApi.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20260613101734_UpdatedModels")]
-    partial class UpdatedModels
+    [Migration("20260615080345_FixedCascadePaths")]
+    partial class FixedCascadePaths
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -471,13 +471,13 @@ namespace CollectionManagerApi.Migrations
                     b.HasOne("CollectionManagerApi.Models.CollectionFolder", "CollectionFolder")
                         .WithMany("CollectionFolder_Collection")
                         .HasForeignKey("CollectionFolderID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("CollectionManagerApi.Models.Collection", "Collection")
                         .WithMany("CollectionFolder_Collection")
                         .HasForeignKey("CollectionID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Collection");

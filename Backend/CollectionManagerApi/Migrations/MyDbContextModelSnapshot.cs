@@ -468,13 +468,13 @@ namespace CollectionManagerApi.Migrations
                     b.HasOne("CollectionManagerApi.Models.CollectionFolder", "CollectionFolder")
                         .WithMany("CollectionFolder_Collection")
                         .HasForeignKey("CollectionFolderID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("CollectionManagerApi.Models.Collection", "Collection")
                         .WithMany("CollectionFolder_Collection")
                         .HasForeignKey("CollectionID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Collection");

@@ -154,19 +154,19 @@ namespace CollectionManagerApi.Data
 
             //CollectionFolder_Collection - m:m med CollectionFolder og Collection
             modelBuilder.Entity<CollectionFolder_Collection>()
-                .HasKey(cf_c => new {cf_c.CollectionFolderID, cf_c.CollectionID});
+                .HasKey(cf_c => new { cf_c.CollectionFolderID, cf_c.CollectionID });
 
             modelBuilder.Entity<CollectionFolder_Collection>()
                 .HasOne(cf_c => cf_c.CollectionFolder)
                 .WithMany(cf => cf.CollectionFolder_Collection)
                 .HasForeignKey(cf_c => cf_c.CollectionFolderID)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<CollectionFolder_Collection>()
                 .HasOne(cf_c => cf_c.Collection)
                 .WithMany(c => c.CollectionFolder_Collection)
                 .HasForeignKey(cf_c => cf_c.CollectionID)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.NoAction);
 
             //Item_Collection - m:m med Item og Collection
             modelBuilder.Entity<Item_Collection>()

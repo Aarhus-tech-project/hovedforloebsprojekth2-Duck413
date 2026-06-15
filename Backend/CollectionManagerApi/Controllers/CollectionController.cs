@@ -4,6 +4,7 @@ using CollectionManagerApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace CollectionManagerApi.Controllers
 {
@@ -22,11 +23,15 @@ namespace CollectionManagerApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Collection>> CreateCollection(CreateCollectionDTO dto)
         {
-            var createdCollection = await _collectionService.CreateCollection(dto);
-            
+            var userIdClaim = User.FindFirst("userId")?.Value;
+            if (userIdClaim == null) return Unauthorized();
+
+            int userId = int.Parse(userIdClaim);
+            var createdCollection = await _collectionService.CreateCollection(dto, userId);
+
             return CreatedAtAction(
                 nameof(GetOneCollection),
-                new {id = createdCollection.CollectionId},
+                new { id = createdCollection.CollectionId },
                 createdCollection);
         }
 
