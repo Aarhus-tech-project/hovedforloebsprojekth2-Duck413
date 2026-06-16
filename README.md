@@ -8,3 +8,5 @@ Til min hovedforløbsopgave er der vedlagt:
 
 Dokumentationen er baseret på min vision for min opgave, men jeg har ikke nået det hele grundet tidspres. 
 Af samme grund er der i koden også lavet modeller, services og controllers, som ikke har fået indhold endnu.
+
+Anne Pedersen, 18/06/2026
