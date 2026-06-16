@@ -4,12 +4,7 @@
 Til min hovedforløbsopgave er der vedlagt:
    - Kode til frontend
    - Kode til backend
-   - Dokumentation af min opgave: 
-	-Domain model diagram
-	-Implementation classes diagram
-	-ER diagram
+   - Diagrammer til dokumentation af min opgave: Domain model, Implementation classes og ER
 
-Dokumentationen er baseret på hvad min vision for min opgave,
-men jeg har ikke nået det hele grundet tidspres. 
-I koden er der derfor også lavet modeller, services og controllers,
-som ikke har fået indhold endnu, idet jeg ikke nåede så langt. 
+Dokumentationen er baseret på min vision for min opgave, men jeg har ikke nået det hele grundet tidspres. 
+Af samme grund er der i koden også lavet modeller, services og controllers, som ikke har fået indhold endnu.
