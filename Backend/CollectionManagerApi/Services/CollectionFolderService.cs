@@ -2,24 +2,10 @@
 {
     public class CollectionFolderService
     {
-        public void CreateCollectionFolder()
-        {
-
-        }
-
-        public void UpdateCollectionFolder()
-        {
-
-        }
-
-        public void DeleteCollectionFolder()
-        {
-
-        }
-
-        public void DragAndDropCollectionFolder()
-        {
-
-        }
+        /*
+        Jeg nåede ikke at implementere folderstruktur til collections
+        Ville have haft CreateCollectionFolder(), GetAllCollctionFolder, GetOneCollectionFolder, UpdateCollectionFolder, DeleteCollectionFolder(), 
+        og DragAndDropCollectionFolder()
+        */
     }
 }

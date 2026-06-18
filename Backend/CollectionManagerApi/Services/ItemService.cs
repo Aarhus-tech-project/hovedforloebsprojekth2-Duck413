@@ -16,7 +16,6 @@ namespace CollectionManagerApi.Services
 
         public async Task<Item> CreateItem(CreateItemDTO dto)
         {
-            // Enforce that exactly one destination is provided
             if (dto.CollectionID == null && dto.WishlistID == null)
                 throw new Exception("An item must be placed in either a collection or a wishlist.");
 
@@ -71,9 +70,31 @@ namespace CollectionManagerApi.Services
             return await _context.Item.ToListAsync();
         }
 
-        public async Task<Item?> GetOneItem(int id)
+        public async Task<object?> GetOneItem(int id)
         {
-            return await _context.Item.FindAsync(id);
+            var item = await _context.Item
+                .Include(i => i.Item_Collection)
+                .Include(i => i.Wishlist_Item)
+                .FirstOrDefaultAsync(i => i.ItemID == id);
+
+            if (item == null) return null;
+
+            var collectionId = item.Item_Collection.FirstOrDefault()?.CollectionID;
+            var wishlistId = item.Wishlist_Item.FirstOrDefault()?.WishlistID;
+
+            return new
+            {
+                item.ItemID,
+                item.ItemName,
+                item.ItemDescription,
+                item.ItemType,
+                item.ItemValue,
+                item.ItemCount,
+                item.PictureID,
+                item.ItemPurchaseDate,
+                collectionId,
+                wishlistId
+            };
         }
 
         public async Task<List<Item>> GetItemsInCollection(int collectionId)
@@ -85,9 +106,7 @@ namespace CollectionManagerApi.Services
                 .ToListAsync();
         }
 
-        public async Task<bool> UpdateItem(
-            int id,
-            UpdateItemDTO dto)
+        public async Task<bool> UpdateItem(int id, UpdateItemDTO dto)
         {
             var item = await _context.Item.FindAsync(id);
 
@@ -124,5 +143,10 @@ namespace CollectionManagerApi.Services
 
             return true;
         }
+
+        /*
+        Mangler at implementere GetStatisticValues
+        */
+
     }
 }

@@ -2,24 +2,9 @@
 {
     public class UserProfileService
     {
-        public void CreateUser()
-        {
 
-        }
-
-        public void UpdateUser() 
-        { 
-        
-        }
-
-        public void DeleteUser()
-        {
-
-        }
-
-        public void ShareProfileLink()
-        {
-
-        }
     }
+    /*
+    Mangler at implementere SharePorfileLink() og ShowStatistics()
+    */
 }

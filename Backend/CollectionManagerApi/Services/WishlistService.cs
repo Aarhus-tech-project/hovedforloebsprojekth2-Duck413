@@ -1,30 +1,35 @@
-﻿namespace CollectionManagerApi.Services
+﻿using CollectionManagerApi.Data;
+using CollectionManagerApi.Models;
+using Microsoft.EntityFrameworkCore;
+
+
+namespace CollectionManagerApi.Services
 {
     public class WishlistService
     {
-        public void CreateWishlistItem()
-        {
+        private readonly MyDbContext _context;
 
+        public WishlistService(MyDbContext context)
+        {
+            _context = context;
         }
 
-        public void UpdateWishlistItem()
+        public async Task<Wishlist?> GetWishlistForUser(int userId)
         {
-
+            return await _context.Wishlist
+                .FirstOrDefaultAsync(w => w.UserID == userId);
         }
 
-        public void DeleteWishlistItem()
+        public async Task<List<Item>> GetWishlistItems(int wishlistId)
         {
-
-        }
-
-        public void DragAndDropWishlistItem()
-        {
-
-        }
-
-        public void ShareWishlist()
-        {
-
+            return await _context.Item
+                .Where(i => i.Wishlist_Item.Any(wi => wi.WishlistID == wishlistId))
+                .ToListAsync();
         }
     }
+
+    /*
+    Mangler at implementere GetOneWishlistItem(), UpdateWishlistItem(), DeleteWishlistItem(), 
+    DragAndDropWishlistItem() og ShareWishlist()
+    */
 }

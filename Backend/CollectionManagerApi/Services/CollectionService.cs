@@ -28,9 +28,11 @@ namespace CollectionManagerApi.Services
             return collection;
         }
 
-        public async Task<List<Collection>> GetAllCollections()
+        public async Task<List<Collection>> GetAllCollections(int userId)
         {
-            return await _context.Collection.ToListAsync();
+            return await _context.Collection
+                    .Where(c => c.UserID == userId)
+                    .ToListAsync();
         }
 
         public async Task<Collection?> GetOneCollection(int id)

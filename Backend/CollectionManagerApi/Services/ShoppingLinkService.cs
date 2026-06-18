@@ -2,19 +2,9 @@
 {
     public class ShoppingLinkService
     {
-        public void AddShoppingLink()
-        {
-
-        }
-
-        public void UpdateShoppingLink()
-        {
-
-        }
-
-        public void DeleteShoppingLink()
-        {
-
-        }
+        /*
+        Jeg nåede ikke at implementere shoppinglinks.
+        Ville have haft AddShoppingLink(), UpdateShoppingLink() og DeleteShoppingLink()
+        */
     }
 }
