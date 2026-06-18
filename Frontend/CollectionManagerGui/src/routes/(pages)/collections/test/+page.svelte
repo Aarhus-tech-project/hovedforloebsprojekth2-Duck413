@@ -1,4 +1,4 @@
-<!-- TEST af View 1 collection -->
+<!-- TEST af View 1 collection. Kun til opbygning af GUI, er IKKE brugt i det endelige resultat -->
 <script>
     import { goto } from '$app/navigation';
 

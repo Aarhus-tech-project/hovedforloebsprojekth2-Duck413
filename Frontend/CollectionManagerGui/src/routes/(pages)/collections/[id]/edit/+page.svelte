@@ -1,8 +1,9 @@
 <!-- Edit collection -->
 <script>
     import { goto } from '$app/navigation';
-
-    const BASE = 'http://localhost:5215/api';
+    import { getToken } from '$lib/auth.js';
+    import { BASE } from '$lib/config.js';  
+      
     const { data } = $props();
 
     let collectionName = $state(data.collection.collectionName);
@@ -13,9 +14,13 @@
         submitted = true;
         if (!collectionName.trim()) return;
 
+        const token = getToken();
         await fetch(`${BASE}/Collection/${data.id}`, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+            },
             body: JSON.stringify({
                 collectionName,
                 collectionDescription
@@ -65,19 +70,9 @@
 
 </div>
 
-<!-- TEST NAVIGATION; DELETE LATER
-<nav class="flex justify-left ml-10">
+<nav class="flex justify-left ml-10 mb-10">
   <button 
-    class="bg-purple-700 text-white px-6 py-2 rounded-lg cursor-pointer hover:bg-purple-900"
-    onclick={() => goto('/collections/test')}>
-    Cancel
-  </button>
-</nav>-->
-
-<!-- ACTUAL NAVIGATION-->
-<nav class="flex justify-left ml-10">
-  <button 
-    class="bg-purple-700 text-white px-6 py-2 rounded-lg cursor-pointer hover:bg-purple-900"
+    class="bg-gray-400 text-white px-6 py-2 rounded-lg cursor-pointer hover:bg-purple-900"
     onclick={() => goto(`/collections/${data.id}`)}>
     Cancel
   </button>

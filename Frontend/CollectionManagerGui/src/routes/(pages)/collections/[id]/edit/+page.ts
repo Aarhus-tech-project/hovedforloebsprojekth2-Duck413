@@ -1,20 +1,14 @@
 //Edit collection
-/*TEST CODE, TO BE DELETED
-export function load({ params }: { params: { id: string } }) {
-    return { 
-        id: params.id,
-        collection: {
-            collectionName: 'Test Collection',
-            collectionDescription: 'Test Description'
-        }
-    };
-}*/
+export const ssr = false;
 
-/*ACTUAL CODE TO BE USED*/
-const BASE = 'http://localhost:5215/api';
+import { getToken } from '$lib/auth.js';
+import { BASE } from '$lib/config.js'; 
 
 export async function load({ params }: { params: { id: string } }) {
-    const res = await fetch(`${BASE}/Collection/${params.id}`);
+    const token = getToken();
+    const res = await fetch(`${BASE}/Collection/${params.id}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
     const collection = await res.json();
     return { id: params.id, collection };
 }
