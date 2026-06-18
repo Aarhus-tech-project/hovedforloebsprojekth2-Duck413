@@ -1,8 +1,6 @@
-<!-- TEST af View 1 item -->
+<!-- TEST af View 1 item. Bruges kun til opbygning og desgin af GUI - ikke det endelige resultat -->
 <script>
     import { goto } from '$app/navigation';
-
-    const BASE = 'http://localhost:5215/api';
 
 async function deleteItem() {
     const confirmed = confirm('Are you sure you want to delete this item? This cannot be undone.');

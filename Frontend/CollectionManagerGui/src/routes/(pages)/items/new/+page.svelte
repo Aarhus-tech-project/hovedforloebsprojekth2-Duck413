@@ -1,8 +1,9 @@
 <!-- Create item page-->
 <script>
   import { goto } from '$app/navigation';
-
-  const BASE = 'http://localhost:5215/api';
+  import { getToken } from '$lib/auth.js';
+  import { onMount } from 'svelte';
+  import { BASE } from '$lib/config.js'; 
 
   const { data } = $props();
 
@@ -16,25 +17,46 @@
 
   // @ts-ignore
   let collections = $state([]);
+  let wishlistId = $state(null);
 
   async function loadCollections() {
-    const res = await fetch(`${BASE}/Collection`);
+    const token = getToken();
+    const res = await fetch(`${BASE}/Collection`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
     collections = await res.json();
-    
-    console.log(collections[0]); // add this line
+  }
+
+  async function loadWishlist() {
+    const token = getToken();
+    const res = await fetch(`${BASE}/Wishlist`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      wishlistId = data.wishlistId;
+    }
   }
 
 async function createItem() {
     submitted = true;
     if (!itemName.trim() || !selectedCollection) {
       return;
-    }  
+    }
+    const token = getToken();
     const res = await fetch(`${BASE}/Item`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify({
             collectionID: selectedCollection === 'wishlist' ? null : Number(selectedCollection),
-            wishlistID: selectedCollection === 'wishlist' ? 1 : null, // adjust as needed
+            wishlistID: selectedCollection === 'wishlist' ? wishlistId : null,
             itemName,
             itemDescription,
             itemType,
@@ -56,60 +78,53 @@ async function createItem() {
     }
   }
 
-  loadCollections();
-
-  /*async function login() {
-    await goto('/collections');
-  }*/
+    onMount(() => {
+    loadCollections();
+    loadWishlist();
+  });
 </script>
 
 <h1 class="text-center text-4xl mt-10">
     CREATE A NEW ITEM 
 </h1>
 
-<h2 class="text-xl flex justify-left ml-10 mt-5">
-  PLEASE NOTE:
-</h2>
-<h2 class="text-xl justify-left ml-10">
+<h2 class="text-xl text-center ml-10 mt-15">
   All <span class="text-red-700">*</span> must be filled out
 </h2>
 
 <div class="w-full max-w-4xl mx-auto px-4">
-  <div class="grid grid-cols-2 gap-x-4 gap-y-4 mt-10">
-
-    <div class="flex items-center gap-4">
-      <label class="w-20 shrink-0 text-right">Name<span class="text-red-700">*</span></label>
-      <div class="flex flex-col flex-1">
-        <input class="border p-2 rounded w-full text-black {submitted && !itemName.trim() ? 'border-red-500 border-2' : ''}" type="text" bind:value={itemName} />
-        {#if submitted && !itemName.trim()}
-          <p class="text-red-700 text-sm mt-1">Pick a name for your item</p>
-        {/if}
-      </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-4 mt-10">
+    <div class="flex flex-col gap-2">
+      <label class="text-left">Name<span class="text-red-700">*</span></label>
+      <input class="border p-2 rounded w-full text-black {submitted && !itemName.trim() ? 'border-red-500 border-2' : ''}" type="text" bind:value={itemName} />
+      {#if submitted && !itemName.trim()}
+        <p class="text-red-700 text-sm mt-1">Pick a name for your item</p>
+      {/if}
     </div>
 
-    <div class="flex items-center gap-4">
-      <label class="w-20 shrink-0 text-right">Type</label>
-      <input class="border p-2 rounded w-full text-black flex-1" type="text" bind:value={itemType} />
+    <div class="flex flex-col gap-2">
+      <label class="text-left">Type</label>
+      <input class="border p-2 rounded w-full text-black" type="text" bind:value={itemType} />
     </div>
 
-    <div class="flex items-start gap-4 row-span-2">
-      <label class="w-20 shrink-0 text-right mt-2">Description</label>
-      <textarea class="border p-2 rounded w-full h-32 text-black resize-none flex-1" bind:value={itemDescription}></textarea>
+    <div class="flex flex-col gap-2 row-span-2">
+      <label class="text-left">Description</label>
+      <textarea class="border p-2 rounded w-full h-32 text-black resize-none" bind:value={itemDescription}></textarea>
     </div>
 
-    <div class="flex items-center gap-4 self-start">
-      <label class="w-20 shrink-0 text-right">Value</label>
-      <input class="border p-2 rounded w-full text-black flex-1" type="number" bind:value={itemValue} />
+    <div class="flex flex-col gap-2">
+      <label class="text-left">Value</label>
+      <input class="border p-2 rounded w-full text-black" type="number" bind:value={itemValue} />
     </div>
 
-    <div class="flex items-center gap-4 self-start">
-      <label class="w-20 shrink-0 text-right">Count</label>
-      <input class="border p-2 rounded w-full text-black flex-1" type="number" bind:value={itemCount} />
+    <div class="flex flex-col gap-2">
+      <label class="text-left">Count</label>
+      <input class="border p-2 rounded w-full text-black" type="number" bind:value={itemCount} />
     </div>
 
-    <div class="col-span-2 flex items-center justify-center mt-5 mb-5 gap-4">
-      <label class="w-32 shrink-0 text-right">Add to <span class="text-red-700">*</span></label>
-      <div class="flex flex-col flex-1 max-w-sm">
+    <div class="md:col-span-2 flex flex-col items-center gap-2 mt-5 mb-5">
+      <div class="flex flex-col w-full max-w-sm">
+        <label class="text-left mb-2">Add to <span class="text-red-700">*</span></label>
         <select
           class="border p-2 rounded w-full text-black"
           style={submitted && !selectedCollection ? 'border: 2px solid red' : ''}
@@ -117,7 +132,7 @@ async function createItem() {
           <option value="">-- Select --</option>
           <option value="wishlist">Wishlist</option>
           {#each collections as collection}
-            <option value={collection.collectionID}>{collection.collectionName}</option>
+            <option value={collection.collectionId}>{collection.collectionName}</option>
           {/each}
         </select>
         {#if submitted && !selectedCollection}
@@ -126,7 +141,7 @@ async function createItem() {
       </div>
     </div>
 
-    <div class="col-span-2 flex justify-center">
+    <div class="md:col-span-2 flex justify-center">
       <button
         class="bg-purple-700 text-white px-6 py-2 rounded-lg cursor-pointer hover:bg-purple-900"
         onclick={createItem}>
@@ -136,9 +151,9 @@ async function createItem() {
   </div>
 </div>
 
-<nav class="flex justify-left ml-10">
+<nav class="flex justify-left ml-10 mb-10">
   <button 
-    class="bg-purple-700 text-white px-6 py-2 rounded-lg cursor-pointer hover:bg-purple-900"
+    class="bg-gray-400 text-white px-6 py-2 rounded-lg cursor-pointer hover:bg-purple-900"
     onclick={() => goto(data.from)}>
     Cancel
   </button>
