@@ -9,6 +9,7 @@
 }
 
 header {
+  margin: 0;
   background-color: var(--color-primary);
 }
 
