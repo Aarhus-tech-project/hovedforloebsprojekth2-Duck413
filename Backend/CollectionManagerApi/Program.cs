@@ -11,22 +11,23 @@ var builder = WebApplication.CreateBuilder(args);
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var secretKey = jwtSettings["SecretKey"];
 
-// Add services to the container.
+// Services 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
     });
-// Services 
 builder.Services.AddScoped<CollectionService>();
 builder.Services.AddScoped<ItemService>();
+builder.Services.AddScoped<WishlistService>();
 // CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("FrontendOnly", policy =>
     {
-        //policy.WithOrigins("http://www.gr02.prog.skylab.academy")
-       policy.WithOrigins("http://localhost:5173")
+        policy
+        .WithOrigins("http://www.gr02.prog.skylab.academy",
+        "http://localhost:5173")
         .AllowAnyHeader()
         .AllowAnyMethod();
     });
@@ -80,8 +81,9 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// DbContext: use SQL Server when a connection string is provided; otherwise use InMemory for Development
+// DbContext
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+Console.WriteLine($">>> CONNECTION STRING: {connectionString}");
 if (!string.IsNullOrWhiteSpace(connectionString))
 {
     builder.Services.AddDbContext<MyDbContext>(options =>
@@ -108,6 +110,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+//CORS
 app.UseCors("FrontendOnly");
 
 if (!app.Environment.IsDevelopment())
@@ -148,7 +151,6 @@ using (var scope = app.Services.CreateScope())
     {
         var logger = services.GetService<ILogger<Program>>();
         logger?.LogError(ex, "An error occurred while migrating or initializing the database.");
-        // In a production scenario you might want to re-throw to fail-fast.
     }
 }
 

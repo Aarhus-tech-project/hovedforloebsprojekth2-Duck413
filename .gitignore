@@ -535,3 +535,4 @@ Frontend/CollectionManagerGUI/.env
 Frontend/CollectionManagerGUI/.svelte-kit/
 Frontend/CollectionManagerGUI/local.db
 Frontend/CollectionManagerGUI/node_modules/
+/Backend/CollectionManagerApi/appsettings.Development.json
