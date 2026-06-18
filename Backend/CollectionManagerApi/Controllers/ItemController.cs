@@ -42,10 +42,9 @@ namespace CollectionManagerApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Item>> GetOneItem(int id)
+        public async Task<ActionResult<object>> GetOneItem(int id)
         {
-            var item =
-                await _itemService.GetOneItem(id);
+            var item = await _itemService.GetOneItem(id);
 
             if (item == null)
             {

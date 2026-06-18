@@ -4,3 +4,5 @@
     {
     }
 }
+
+//Jeg nåede ikke at implementere chatrooms

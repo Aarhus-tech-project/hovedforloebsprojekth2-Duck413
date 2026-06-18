@@ -8,6 +8,9 @@ using CollectionManagerApi.DTOs;
 using CollectionManagerApi.Data;
 
 namespace CollectionManagerApi.Controllers
+
+    /*NOTE: jeg startede med at skrive alt logic i én fil, og så splittede jeg det senere op i controller og service. 
+     Grundet tidspres nåede jeg det ikke med denne fil, men noget af den burde flyttes til en service*/
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -22,21 +25,17 @@ namespace CollectionManagerApi.Controllers
             _config = config;
         }
 
-        // POST api/auth/register
         [HttpPost("register")]
         public async Task<IActionResult> Register(CreateUserDTO dto)
         {
-            // Check if email already exists
             bool emailTaken = _context.UserLogin.Any(u => u.UserEmail == dto.UserEmail);
             if (emailTaken)
                 return BadRequest("Email is already in use.");
 
-            // Create the root User
             var user = new User { IsActive = true };
             _context.User.Add(user);
-            await _context.SaveChangesAsync(); // Save so user gets its UserId
+            await _context.SaveChangesAsync();
 
-            // Create UserLogin with hashed password
             var userLogin = new UserLogin
             {
                 UserID = user.UserID,
@@ -45,51 +44,54 @@ namespace CollectionManagerApi.Controllers
             };
             _context.UserLogin.Add(userLogin);
 
-            // Create UserProfile
             var userProfile = new UserProfile
             {
                 UserID = user.UserID,
                 DisplayName = dto.DisplayName,
+                UserDescription = dto.UserDescription,
                 AdminUserType = false
             };
             _context.UserProfile.Add(userProfile);
+
+            var wishlist = new Wishlist(user.UserID, "My Wishlist");
+            _context.Wishlist.Add(wishlist);
 
             await _context.SaveChangesAsync();
 
             return Ok("User registered successfully.");
         }
 
-        // POST api/auth/login
         [HttpPost("login")]
         public IActionResult Login(LoginDTO dto)
         {
-            // Find user by email
             var userLogin = _context.UserLogin
                 .FirstOrDefault(u => u.UserEmail == dto.UserEmail);
 
             if (userLogin == null)
                 return Unauthorized("Invalid email or password.");
 
-            // Verify password
             bool passwordValid = BCrypt.Net.BCrypt.Verify(dto.Password, userLogin.PasswordHash);
             if (!passwordValid)
                 return Unauthorized("Invalid email or password.");
 
-            // Generate JWT token
-            var token = GenerateToken(userLogin);
+            var userProfile = _context.UserProfile
+                .FirstOrDefault(p => p.UserID == userLogin.UserID);
+
+            var token = GenerateToken(userLogin, userProfile?.DisplayName ?? "Unknown");
 
             return Ok(new { token });
         }
 
-        private string GenerateToken(UserLogin userLogin)
+        private string GenerateToken(UserLogin userLogin, string displayName)
         {
             var jwtSettings = _config.GetSection("JwtSettings");
 
             var claims = new[]
             {
-            new Claim("userId", userLogin.UserID.ToString()),
-            new Claim("email", userLogin.UserEmail)
-        };
+                new Claim("userId", userLogin.UserID.ToString()),
+                new Claim("email", userLogin.UserEmail),
+                new Claim("displayName", displayName)
+            };
 
             var key = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]));

@@ -38,7 +38,11 @@ namespace CollectionManagerApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Collection>>> GetAllCollections()
         {
-            var collections = await _collectionService.GetAllCollections();
+            var userIdClaim = User.FindFirst("userId")?.Value;
+            if (userIdClaim == null) return Unauthorized();
+
+            int userId = int.Parse(userIdClaim);
+            var collections = await _collectionService.GetAllCollections(userId);
 
             return Ok(collections);
         }
