@@ -9,8 +9,8 @@
         public string ItemName { get; set; }
         public string? ItemType { get; set; }
         public string? ItemDescription { get; set; }
-        public Picture? Picture { get; set; }
         public DateTime? ItemPurchaseDate { get; set; }
+        public Picture? Picture { get; set; }
         public ICollection<Item_Collection> Item_Collection { get; set; }
         public ICollection<MarketplaceListing> MarketplaceListing { get; set; }
         public ICollection<Wishlist_Item> Wishlist_Item { get; set; }

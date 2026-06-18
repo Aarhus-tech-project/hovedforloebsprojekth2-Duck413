@@ -7,5 +7,13 @@
         public string WishlistName { get; set; }
         public User User {  get; set; }
         public ICollection<Wishlist_Item> Wishlist_Item { get; set; }
+
+        public Wishlist() { }
+
+        public Wishlist(int userId, string wishlistName)
+        {
+            UserID = userId;
+            WishlistName = wishlistName;
+        }
     }
 }
